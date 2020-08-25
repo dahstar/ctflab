@@ -1,4 +1,4 @@
-# ctflab #ctf #google #coding #editor #competition 
+# ctflab #ctf #google #coding #editor #competition (for run type python(3) ctflab.py and before you should install pyqt5)
 open source python editor for access ctf quetions and run codes(with type #pyrun or #cpprun or #crun) and save them on databse and access them without open file
 for example for run python code use this code ![screenshoot1](https://user-images.githubusercontent.com/1917593/91184148-89235880-e701-11ea-91cf-7bb17f30df14.PNG)
 and save them in databse with typing key.info #save ![screenshoot2](https://user-images.githubusercontent.com/1917593/91184483-ef0fe000-e701-11ea-91a3-a32691cd7630.PNG)
