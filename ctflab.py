@@ -487,7 +487,7 @@ if __name__ == '__main__':
     print(sys.argv)
     codeEditor = CodeEditor()
     codeEditor.resize(900, 600)
-    codeEditor.setStyleSheet("background-image: url(vtlab.gif);color:white;background-repeat: no-repeat; background-position: center;")
+    codeEditor.setStyleSheet("background-image: url(lab.gif);color:white;background-repeat: no-repeat; background-position: center;")
     allkeys=[]
     #with open("syntax.py","r") as f:
        # codeEditor.setPlainText(f.read())
