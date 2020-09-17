@@ -5,7 +5,7 @@ class Key:
     def __init__(self, key,content,info, database_path):
       try:
         self.key = key
-        self.database_path = "googlectf2020.db"
+        self.database_path =database_path 
 
         if not self.check_key_exists():
           if len(self.get_all__key(key))==0:
@@ -30,6 +30,7 @@ class Key:
         else:
             return True
     def get_all__key(self, key):
+     #print("alldb",self.database_path) 
      conn = sqlite3.connect(self.database_path)
      a=[]
      if key!="":
@@ -71,7 +72,7 @@ class Key:
       try:
         conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
-        print(str(len(self.get_all__key(key))))
+        #print(str(len(self.get_all__key(key))))
         if len(self.get_all__key(key))==0:
          cursor.execute("INSERT INTO os (key,content,info) VALUES (?,?,?)", (key,content,info))
 

@@ -8,7 +8,6 @@ __license__ = "License:BSD 3Clause"
  
  
 import sys
- 
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QColor, QTextCharFormat, QFont, QSyntaxHighlighter
 from PyQt5.QtWidgets import *
