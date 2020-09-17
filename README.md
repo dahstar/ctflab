@@ -2,9 +2,12 @@
 download zip file from here 
 https://mega.nz/file/yuIgmY7A#3YNzXFMQ4B5Ablb8oZmI6G2r7FYjB1FvGJHOCrgcMUw
 type #openfile and confirm you want execute #openfile with click yes and  select zip file 
+
+![Capture](https://user-images.githubusercontent.com/1917593/93487620-b63ae380-f91a-11ea-80c3-a8074b0078aa.PNG)
+
 that you downloaded before now you see text from android.txt inside android.zip that is writeup for windows
-and google ctf 2020 android problem(i will add other ctf problems and competetions and linux version soon)
-![Capture2](https://user-images.githubusercontent.com/1917593/93482099-91437200-f914-11ea-813b-33c012dbea02.PNG)
+and google ctf 2020 android problem @google-ctf (i will add other ctf problems and competetions and linux version soon)
+![Capture2](https://user-images.githubusercontent.com/1917593/93487780-db2f5680-f91a-11ea-93f6-ab8232a197f1.PNG)
 now on end of line if you see #run it means with click on it you can run command without download or install apktool and jadx-gui
 and just with using this writeup.
 also when type apktool you can get related command on autocomplete and use it during ctf 
