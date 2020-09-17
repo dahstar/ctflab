@@ -1,14 +1,13 @@
-# ctflab #ctf #google #coding #editor #competition (for run type python(3) ctflab.py and before you should install pyqt5)
-open source python editor for access ctf quetions and run codes(with type #pyrun or #cpprun or #crun) and save them on databse and access them without open file
-for example for run python code use this code ![screenshoot1](https://user-images.githubusercontent.com/1917593/91184148-89235880-e701-11ea-91cf-7bb17f30df14.PNG)
-and save them in databse with typing key.info #save ![screenshoot2](https://user-images.githubusercontent.com/1917593/91184483-ef0fe000-e701-11ea-91a3-a32691cd7630.PNG)
-and if you forgot parts of code just with typing key access to code without open any file ![screenshoot3](https://user-images.githubusercontent.com/1917593/91184730-326a4e80-e702-11ea-92e3-3bf51c23e4cc.png)
-you can do for ctf quetions too for example for @google ctf 2020 quetions just type google ctf 2020 
-![Screenshot4](https://user-images.githubusercontent.com/1917593/91185233-cb996500-e702-11ea-86b5-8b61f16631d0.png)
-and for example choice android 
-![screenshot5](https://user-images.githubusercontent.com/1917593/91185519-2df26580-e703-11ea-9e5c-8ac0e5c6a6a8.PNG)
-and open attachment with typing #openweb on end of it and solve it
-if you open zip file with #open file you cab run commands inside zip folder.i will publish more quetions and answeers and soon.for example type xss attack and see xss quetions
-and manual.writeup isn't mine i only solve android problem on google ctf 2020 because it was my first ctf almost.
-
-(this applications is still on beta and will be improved later)
+<h1>ctflab use ctf writeups for solve ctfs problems and hacking <h1>
+download zip file from here 
+https://mega.nz/file/yuIgmY7A#3YNzXFMQ4B5Ablb8oZmI6G2r7FYjB1FvGJHOCrgcMUw
+type #openfile and confirm you want execute #openfile with click yes and  select zip file 
+that you downloaded before now you see text from android.txt inside android.zip that is writeup for windows
+and google ctf 2020 android problem(i will add other ctf problems and competetions and linux version soon)
+![Capture2](https://user-images.githubusercontent.com/1917593/93482099-91437200-f914-11ea-813b-33c012dbea02.PNG)
+now on end of line if you see #run it means with click on it you can run command without download or install apktool and jadx-gui
+and just with using this writeup.
+also when type apktool you can get related command on autocomplete and use it during ctf 
+this tool is on beta mode run it with python(3) ctflab.py .
+on windows use this exe file(linux executeable one file will be added soon or you can make it with 
+https://mega.nz/file/arBW2CxT#sUupSVU5NIyq1odYzr9oLNq42Cb8xUeuBFX2I99t9iM
