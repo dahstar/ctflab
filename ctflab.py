@@ -6,6 +6,7 @@ __license__ = "ctfos"
 from PyQt5.QtGui import *
 from PyQt5 import QtWidgets, QtCore, QtGui
 import os
+import sys
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPlainTextEdit, QCompleter
@@ -17,11 +18,7 @@ import fldb
 import subprocess
 from tkinter import filedialog
 from tkinter import *
-from PyQt5.QtWidgets import QMessageBox
-import darkdetect
 import platform
-from PyQt5.QtGui import QPalette, QColor
-
 class SmartCompleter(QCompleter):
     model = QStringListModel()
     strings = ["one", "two", "THREE"]
@@ -75,7 +72,7 @@ class CodeEditor(QPlainTextEdit):
         
         self.lineNumberArea = LineNumberArea(self)
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setPointSize(16)
         self.setFont(font)
         self.blockCountChanged.connect(self.updateLineNumberAreaWidth)
         self.updateRequest.connect(self.updateLineNumberArea)
@@ -96,19 +93,14 @@ class CodeEditor(QPlainTextEdit):
         text_cursor = self.textCursor()
     
         last_chars = len(completion) - len(self.completer.completionPrefix())
-        
         user=fldb.Key("","","",self.dbfile)
-        text_cursor.insertText("\n")
         try:
             a=user.find_key_content(completion[-last_chars:])
             for s in a:
              if s!="":
               text_cursor.insertText(s)
-            text_cursor.insertText("\n")
-            text_cursor.insertText("\n")
         except:
          pass
-        
         self.setTextCursor(text_cursor)   
     def text_before_cursor(self):
         text_cursor = self.textCursor()
@@ -160,38 +152,36 @@ class CodeEditor(QPlainTextEdit):
         if zipfile2!="":
          dir2=zipfile2.replace(".zip","")
          dir1= os.path.dirname(os.path.realpath(zipfile2))
- 
          y = zipfile.ZipFile(zipfile2,'a')
          y.extractall(dir2) 
          os.chdir(dir2)
-         if platform.system()=="Windows":
-          self.dbfile=dir1+"\\"+os.path.basename(zipfile2).replace(".zip","")+"\\"+os.path.basename(zipfile2).replace(".zip",".db")
-          self.dbfile=self.dbfile.replace('\\', '/')
-         
+         self.dbfile=dir1+"\\"+os.path.basename(zipfile2).replace(".zip","")+"\\"+os.path.basename(zipfile2).replace(".zip",".db")
+         self.dbfile=self.dbfile.replace('\\', '/')
+         print("dbfile",self.dbfile)
+         print("cmd1",cmd)
          if os.system(cmd)==0:
           os.chdir(dir1)
           y.close()
         else:
+            print("cmd",cmd)
             os.system(cmd)
     def openzip(self,zipfile2):
         if zipfile2!="":
          dir2=zipfile2.replace(".zip","")
          dir1= os.path.dirname(os.path.realpath(zipfile2))
-         dir1= os.path.dirname(os.path.realpath(zipfile2))
-         print("dir1",dir1)
          y = zipfile.ZipFile(zipfile2,'a')
          y.extractall(dir2) 
          os.chdir(dir2)
-         if platform.system()=="Windows":
+         if platform.system()=='Windows':
           self.dbfile=dir1+"\\"+os.path.basename(zipfile2).replace(".zip","")+"\\"+os.path.basename(zipfile2).replace(".zip",".db")
           textfile=dir1+"\\"+os.path.basename(zipfile2).replace(".zip","")+"\\"+os.path.basename(zipfile2).replace(".zip",".txt")
-         else:
+         if platform.system()=='Linux':
           self.dbfile=dir1+"/"+os.path.basename(zipfile2).replace(".zip","")+"/"+os.path.basename(zipfile2).replace(".zip",".db")
           textfile=dir1+"/"+os.path.basename(zipfile2).replace(".zip","")+"/"+os.path.basename(zipfile2).replace(".zip",".txt")
          with open(textfile) as f:
           self.setPlainText(self.toPlainText()+"\n"+ f.read())
          self.dbfile=self.dbfile.replace('\\', '/')
-         #print("dbfile",self.dbfile)
+         print("dbfile",self.dbfile)
           
     def openfile(self):
         global oldpath
@@ -202,7 +192,7 @@ class CodeEditor(QPlainTextEdit):
          self.openzip(self.zipfiles)
         elif ".db" in files[0]:
           self.dbfile=files[0]
-          #print("opened db",self.dbfile)
+          print("opened db",self.dbfile)
         elif ".tm" in files[0]:
           self.zipfiles=files[0]
           os.move(files[0],files[0].replace(".tm",".zip"))
@@ -258,17 +248,14 @@ class CodeEditor(QPlainTextEdit):
      else:
         return ''
     def executeline(self,line,str):
-     msgbox = QMessageBox(QMessageBox.Question, "execute", "Are you sure you want to execute "+str+" ?", QMessageBox.Yes | QMessageBox.No)
-     reply = msgbox.exec()
-     if reply == QMessageBox.Yes:
-      if "#new" in str:
+     if "#new" in str:
          self.setPlainText("")
-      elif "#openfile" in str:
+     if "#openfile" in str:
         self.openfile()
-      elif "#filesave" in str:
+     if "#filesave" in str:
         
         self.savefile()
-      elif "pyrun" in str:
+     if "pyrun" in str:
          
         self.filetext=self.toPlainText().replace("#pyrun","").replace(">>>","")
         lines=self.filetext.splitlines()
@@ -277,8 +264,6 @@ class CodeEditor(QPlainTextEdit):
          if not "#run" in s:
           self.filetext+=s+"\n";
           if "#run" in s:
-            self.filetext=""
-          if "#pyfile" in s:
             self.filetext="" 
         with open("temp.py","w+") as f:
              f.write(self.filetext);
@@ -286,11 +271,12 @@ class CodeEditor(QPlainTextEdit):
         if "pyrun2" in str:
             os.system("python2 temp.py")
         else:
+            print("cmd3")
             os.system("python temp.py")
         os.remove("temp.py")
         #self.setPlainText(self.toPlainText().replace("#pyrun",""));
      
-      elif "cpprun" in str:
+     elif "cpprun" in str:
         self.filetext=self.toPlainText().replace("#cpprun","")
         lines=self.filetext.splitlines()
         self.filetext="";
@@ -359,6 +345,7 @@ class CodeEditor(QPlainTextEdit):
     def lineNumberAreaPaintEvent(self, event):
         
         mypainter = QPainter(self.lineNumberArea)
+ 
         mypainter.fillRect(event.rect(), Qt.black)
  
         block = self.firstVisibleBlock()
@@ -386,7 +373,6 @@ class CodeEditor(QPlainTextEdit):
                  
                 except:
                   pass
-                widget = QtWidgets.QListWidget()
                 mypainter.setPen(Qt.white)
                 mypainter.drawText(0, top, self.lineNumberArea.width(), height,
                  Qt.AlignRight, number)
@@ -400,8 +386,6 @@ class CodeEditor(QPlainTextEdit):
     def highlightCurrentLine(self):
         global allkeys
         global dbfile
-        global darkmode
-        widget = QtWidgets.QListWidget()
         extraSelections = []
         block = self.firstVisibleBlock()
         blockNumber = block.blockNumber()
@@ -409,10 +393,8 @@ class CodeEditor(QPlainTextEdit):
        
         if not self.isReadOnly():
             selection = QTextEdit.ExtraSelection()
-            darkmode=True
-            if darkmode:
-             lineColor = QColor(Qt.black)
-     
+            lineColor = QColor(Qt.black)
+ 
             selection.format.setBackground(lineColor)
             selection.format.setProperty(QTextFormat.FullWidthSelection, True)
             selection.cursor = self.textCursor()
@@ -426,14 +408,13 @@ class CodeEditor(QPlainTextEdit):
             self.sc.clear()
             self.completer.popup().isVisible()
             self.sc.clear()
-            if self.dbfile!="":
-             users=fldb.Key("","","", self.dbfile)
-             try:
-              a=users.get_all__key(lines[y-1])
-              for s in a:
+            users=fldb.Key("","","", self.dbfile)
+            try:
+             a=users.get_all__key(lines[y-1])
+             for s in a:
                 if s!="":
                  self.sc.insert(s)
-             except:
+            except:
                 pass
             if self.completer.getlen()==0:
                self.completer.popup().hide()
@@ -497,8 +478,7 @@ class CodeEditor(QPlainTextEdit):
               lines=s.splitlines()
               self.executeline(s,"#new")
              elif lines[y-1].endswith("#openfile"):
-             
-              self.setPlainText(self.toPlainText().splitlines()[y-1].replace("#openfile",""))
+              #s=lines[y-1].replace("#pyrun","")
               lines=s.splitlines()
               self.executeline(s,"#openfile")
              elif lines[y-1].endswith("#exit"):
@@ -511,22 +491,24 @@ class CodeEditor(QPlainTextEdit):
               #s=lines[y-1].replace("#pyrun","")
               lines=s.splitlines()
               self.executeline(s,"#filesave")
-             elif lines[y-1].endswith("#run"):
-               #self.setPlainText(self.toPlainText()+"\n")  
-               msgbox = QMessageBox(QMessageBox.Question, "execute", "Are you sure you want to execute "+lines[y-1]+" ?", QMessageBox.Yes | QMessageBox.No)
-               reply = msgbox.exec()
-               if reply == QMessageBox.Yes:
-                s=lines[y-1].replace("#run","")
-                s=s.replace("$","")
-                if self.zipfiles!="":
-                 self.runonzip(s,self.zipfiles)
-                elif "cddir" in s:
-                    files = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
-                    os.chdir(files)
-                else:
-                 os.system(s)
              else:
-                pass
+              if(lines[y-1].endswith("#run")):
+               self.setPlainText(self.toPlainText().splitlines()[y-1].replace("#run",""))
+               lines[y-1]=lines[y-1].replace("#run","")
+               s=lines[y-1].replace("#run","")
+               s=s.replace("$","")
+               if "cddir" in s:
+                   s=s.replace("cddir","")
+                   files = str(QFileDialog.getExistingDirectory(self, "Select Directory"))
+                   os.chdir(files)
+               elif "openweb" in s:
+                   
+                    s=s.replace("openweb","")
+                    webbrowser.open(s) 
+               elif (lines[y-1].endswith("zip>")):
+                   self.zipconsole(s);
+               else:
+                 self.runonzip(s,self.zipfiles)
             except:
              pass
             #try:
@@ -546,11 +528,7 @@ if __name__ == '__main__':
     print(sys.argv)
     codeEditor = CodeEditor()
     codeEditor.resize(900, 600)
-    widget = QtWidgets.QListWidget()
-    codeEditor.setStyleSheet("color:white;background-repeat: no-repeat; background-position: center;background-color:'black'")
-    palette = QPalette()
-    palette.setColor(QPalette.Window, QColor(53, 53, 53))
-    palette.setColor(QPalette.WindowText, Qt.white)
+    codeEditor.setStyleSheet("background-color:black;color:white;background-repeat: no-repeat; background-position: center;")
     allkeys=[]
     #with open("syntax.py","r") as f:
        # codeEditor.setPlainText(f.read())

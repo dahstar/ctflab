@@ -3,6 +3,7 @@ from sqlite3 import Error
 
 class Key:
     def __init__(self, key,content,info, database_path):
+     if database_path!="":
       try:
         self.key = key
         self.database_path =database_path 
@@ -30,20 +31,21 @@ class Key:
         else:
             return True
     def get_all__key(self, key):
-     #print("alldb",self.database_path) 
-     conn = sqlite3.connect(self.database_path)
      a=[]
-     if key!="":
-      cur = conn.cursor()
-      cur.execute("SELECT * FROM os", () )
+     if self.database_path!="":
+      conn = sqlite3.connect(self.database_path)
+      if key!="":
+       cur = conn.cursor()
+       cur.execute("SELECT * FROM os", () )
 
-      rows = cur.fetchall()
+       rows = cur.fetchall()
 
-      for row in rows:
+       for row in rows:
         #print("s",row[1])
         if key in row[1]:
          a.append(row[1])
-     return a
+      return a
+     return a;
     def find_key_content(self, key):
      conn = sqlite3.connect(self.database_path)
      a=[]
@@ -72,7 +74,7 @@ class Key:
       try:
         conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
-        #print(str(len(self.get_all__key(key))))
+        print(str(len(self.get_all__key(key))))
         if len(self.get_all__key(key))==0:
          cursor.execute("INSERT INTO os (key,content,info) VALUES (?,?,?)", (key,content,info))
 
