@@ -1,6 +1,6 @@
 ctf lab will be updating this week
 ctflab is a tool for using peoples writeup and text for hacking and ctf competetions.different way may solve problems better and even people use completely different far  way they can connect their different ways on this people on this people and use this apps for connect people with different for solve problems on ctf and others and even peoplews have more different ideas and ways with this app can connect to each other and use it for get money with using their way and get money from using different ideas and ways with solving ctf problems and even if have more different ways con coonect more on this app.this app is still beta and imporved for using offline and online zips for connect ctfs.....
------------------how use for this version--------------------------------------------------------------------------------
+-----------------documentation for this version--------------------------------------------------------------------------------
 
 ctflab use ctf writeups for solve ctfs problems and hacking 
 download zip file from here 
